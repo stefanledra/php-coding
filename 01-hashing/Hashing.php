@@ -2,14 +2,13 @@
 
 class Hashing
 {
-    protected static int $LBLower = 96;
-    protected static int $UBLower = 123; //Lower Boundary Lower Case
-    protected static int $middleLower = 109; //Upper Boundary Lower Case
-    protected static int $LBUpper = 64; //Middle lower case
-    protected static int $UBUpper = 91; //Lower Boundary Upper Case
-    protected static int $middleUpper = 77; //Upper Boundary Upper Case
-    protected static int $shift = 12; //Middle upper case
-    private string $result; //Number of spaces the letter shifts left or right accorting to the Ascii
+    protected static int $LBLower = 96;//Lower Boundary Lower Case
+    protected static int $UBLower = 123; //Upper Boundary Lower Case
+    protected static int $middleLower = 109; //Middle lower case
+    protected static int $LBUpper = 64; //Lower Boundary Upper Case
+    protected static int $UBUpper = 91; //Upper Boundary Upper Case
+    protected static int $middleUpper = 77; //Middle upper case
+    protected static int $shift = 12; //Number of spaces the letter shifts left or right accorting to the Ascii
 
     public function __construct()
     {
