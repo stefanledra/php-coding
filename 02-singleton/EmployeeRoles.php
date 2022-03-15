@@ -1,11 +1,11 @@
 <?php
 
-enum Title : string {
-
+enum EmployeeRoles: string
+{
     case hr = 'HR';
     case leadDev = 'Lead Developer';
     case seniorDev = 'Senior Developer';
-    case juniorDev = 'Junior Developer' ;
-    case intern = 'Intern' ;
+    case juniorDev = 'Junior Developer';
+    case intern = 'Intern';
 
 }
