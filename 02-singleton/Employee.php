@@ -9,7 +9,6 @@ class Employee
     private string $surname;
     private string $dob;
     private EmployeeRoles $role;
-    private array $template = array('name', 'surname', 'jmbg', 'dob', 'role');
     private array $randomEmployees = array(
         array(
             'name'    => 'Vojin',
