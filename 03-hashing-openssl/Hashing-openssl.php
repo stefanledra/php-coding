@@ -2,40 +2,48 @@
 
 class Encryption
 {
-    private string $data;
-    private string $iv;
-    private string $encodedData;
+
     private string $cipher = 'aes-256-cbc';
     private int $option = 0;
 
 
-    public function __construct($data)
+    public function __construct()
     {
-        $this->data = $data;
-        $this->key  = bin2hex(openssl_random_pseudo_bytes(16));
+
     }
 
-    public function encrypt()
+    public function encrypt($data): array
     {
-        $ivlen             = openssl_cipher_iv_length($this->cipher);
-        $this->iv          = openssl_random_pseudo_bytes($ivlen);
-        $this->encodedData = openssl_encrypt($this->data, $this->cipher, $this->key, $this->option, $this->iv);
+        $keyGenBits    = 16;
+        $key           = bin2hex(openssl_random_pseudo_bytes($keyGenBits));
+        $ivlen         = openssl_cipher_iv_length($this->cipher);
+        $iv            = openssl_random_pseudo_bytes($ivlen);
+        $encryptedData = openssl_encrypt($data, $this->cipher, $key, $this->option, $iv);
+        $resultArray   = array('encryptedData' => $encryptedData, 'key' => $key, 'iv' => $iv);
 
-        return $this->encodedData;
+        return $resultArray;
     }
 
-    public function decrypt()
+    public function decrypt($dataArray): string
     {
 
-        $decryptedData = openssl_decrypt($this->encodedData, $this->cipher, $this->key, $this->option, $this->iv);
+        $decryptedData = openssl_decrypt(
+            $dataArray['encryptedData'],
+            $this->cipher,
+            $dataArray['key'],
+            $this->option,
+            $dataArray['iv']);
 
         return $decryptedData;
 
     }
 }
 
-$data = 'This needs to be crypted';
-$new  = new Encryption($data);
-echo 'Data after encrypting: '.$new->encrypt().'<br />';
-echo 'Data after decripting back: '.$new->decrypt().'<br />';
+$dataToEncrypt = 'This is to be encrypted';
+$dataToDecrypt = array();
+$new           = new Encryption();
+$dataToDecrypt = $new->encrypt($dataToEncrypt);
+echo 'Data after encrypting: '.$dataToDecrypt['encryptedData'].'<br />';
+
+echo 'Data after decripting back: '.$new->decrypt($dataToDecrypt).'<br />';
 
