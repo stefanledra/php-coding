@@ -16,7 +16,6 @@ class Hashing
 
     public function encrypt($givenWord): string
     {
-
         $array = str_split(string: $givenWord, length: 1);                //Split the string into an array of letters
         for ($i = 0; $i < strlen($givenWord); $i++) {
             $letter = $array[$i];
@@ -41,7 +40,6 @@ class Hashing
 
     public function decrypt($cypher): string
     {
-
         $array = str_split(string: $cypher, length: 1);
         for ($i = 0; $i < strlen($cypher); $i++) {
             $letter = $array[$i];
@@ -64,6 +62,3 @@ class Hashing
         return join($array);
     }
 }
-
-
-
