@@ -26,11 +26,9 @@ include 'Hashing.php';
 <?php
 
 if (isset($_POST['encryptButton'])) {
-
     $encrypt = new Hashing();
     echo 'Kodirana rijec:'.$encrypt->encrypt($_POST['givenWord']);
 } elseif (isset($_POST['decryptButton'])) {
-
     $decrypt = new Hashing();
     echo 'Rezultat nakon dekodiranja:'.$decrypt->decrypt($_POST['cypher']);
 }

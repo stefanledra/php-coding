@@ -7,5 +7,4 @@ enum EmployeeRoles: string
     case seniorDev = 'Senior Developer';
     case juniorDev = 'Junior Developer';
     case intern = 'Intern';
-
 }

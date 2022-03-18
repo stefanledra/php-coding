@@ -1,4 +1,5 @@
 <?php
+
 include 'EmployeeRoles.php';
 
 class Employee
@@ -60,7 +61,6 @@ class Employee
 
     public static function getInstance($data = null)
     {
-
         if (self::$instance === null) {
             self::$instance = new Employee($data);
         }
@@ -97,8 +97,3 @@ $aco    = Employee::getInstance($acoPrint);
 $stefan = Employee::getInstance($stefanPrint);
 $aco->printNicely();
 $stefan->printNicely();
-
-
-
-
-
