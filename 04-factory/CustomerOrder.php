@@ -4,33 +4,43 @@ include 'CoffeeFactory.php';
 
 class CustomerOrder
 {
-    public string $coffeeType;
-    public string $name;
-    public string $phoneNumber;
+    private string $coffeeType;
+    private string $name;
+    private string $phoneNumber;
 
-    public function __construct(CoffeeTypes $chosenCoffee, $name, $phoneNumber)
+    public function __construct($coffeeType, $name, $phoneNumber)
     {
-        $this->coffeeType  = $chosenCoffee->name;
+        $this->coffeeType  = $coffeeType->get();
         $this->name        = $name;
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getOrder(): string
+    public function getOrder(): array
     {
-        return $this->coffeeType;
+        return array(
+            'name'        => $this->name,
+            'phoneNumber' => $this->phoneNumber,
+            'coffeeType'  => $this->coffeeType,
+        );
     }
 }
 
-$chosenCoffee = 'Espresso';
+/*$chosenCoffee = 'Espresso';
 $name         = 'Aco';
 $phoneNumber  = '555-333';
-try {
-    $factory    = new CoffeeFactory();
-    $coffeeType = $factory->brew($chosenCoffee);
+$coffeeType = (new CoffeeFactory)->brew($chosenCoffee);
+if (!is_null($coffeeType)){
     $order      = new CustomerOrder($coffeeType, $name, $phoneNumber);
-    echo 'Person who ordered: '.$order->name.'<br />';
-    echo 'Provided phone number: '.$order->phoneNumber.'<br />';
-    echo 'Your order: '.$order->coffeeType;
-} catch (Exception $e) {
-    echo $e->getMessage();
+    $result     = $order->getOrder();
+    echo 'Person who ordered: '.$result['name'].'<br />';
+    echo 'Provided phone number: '.$result['phoneNumber'].'<br />';
+    echo 'Your order: '.$result['coffeeType'];
+}else{
+    echo 'Invalid type of coffee, please select a valid one and try again!';
+}*/
+
+$typesArray = ['Espresso', 'Latte', 'Macchiato', 'Ristretto', 'Mocha'];
+foreach ($typesArray as $chosenCoffee) {
+    $coffeeType = (new CoffeeFactory())->brew($chosenCoffee);
+    echo $chosenCoffee.'<br />';
 }

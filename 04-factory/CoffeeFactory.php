@@ -1,32 +1,78 @@
 <?php
 
-interface CoffeeTypes
+class Latte
 {
+    private string $name;
+
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    public function get(): string
+    {
+        return $this->name;
+    }
 }
 
-class Latte implements CoffeeTypes
+class Macchiato
 {
-    public string $name;
+    private string $name;
+
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    public function get(): string
+    {
+        return $this->name;
+    }
 }
 
-class Macchiato implements CoffeeTypes
+class Espresso
 {
-    public string $name;
+    private string $name;
+
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    public function get(): string
+    {
+        return $this->name;
+    }
 }
 
-class Espresso implements CoffeeTypes
+class Ristretto
 {
-    public string $name;
+    private string $name;
+
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    public function get(): string
+    {
+        return $this->name;
+    }
 }
 
-class Ristretto implements CoffeeTypes
+class Mocha
 {
-    public string $name;
-}
+    private string $name;
 
-class Mocha implements CoffeeTypes
-{
-    public string $name;
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    public function get(): string
+    {
+        return $this->name;
+    }
 }
 
 
@@ -36,30 +82,24 @@ class CoffeeFactory
     {
         switch ($chosenCoffee) {
             case 'Latte':
-                $resultObject       = new Latte();
-                $resultObject->name = 'Latte';
+                $resultObject = new Latte('Latte');
                 break;
             case 'Macchiato':
-                $resultObject       = new Macchiato();
-                $resultObject->name = 'Macchiato';
+                $resultObject = new Macchiato('Macchiato');
                 break;
             case 'Espresso':
-                $resultObject       = new Espresso();
-                $resultObject->name = 'Espresso';
+                $resultObject = new Espresso('Espresso');
                 break;
             case 'Ristretto':
-                $resultObject       = new Ristretto();
-                $resultObject->name = 'Ristretto';
+                $resultObject = new Ristretto('Ristretto');
                 break;
             case 'Mocha':
-                $resultObject       = new Mocha();
-                $resultObject->name = 'Mocha';
+                $resultObject = new Mocha('Mocha');
                 break;
+            default:
+                $resultObject = null;
         }
-        if (isset($resultObject)) {
-            return $resultObject;
-        } else {
-            throw new Exception('Can not create your order! Please input the valid coffee type!');
-        }
+
+        return $resultObject;
     }
 }
