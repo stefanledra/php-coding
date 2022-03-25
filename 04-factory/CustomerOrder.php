@@ -1,46 +1,32 @@
 <?php
 
 include 'CoffeeFactory.php';
+include_once 'coffee-types/CoffeeType.php';
 
 class CustomerOrder
 {
     private string $coffeeType;
-    private string $name;
-    private string $phoneNumber;
 
-    public function __construct($coffeeType, $name, $phoneNumber)
+    public function __construct(object $coffeeType)
     {
-        $this->coffeeType  = $coffeeType->get();
-        $this->name        = $name;
-        $this->phoneNumber = $phoneNumber;
+        $this->coffeeType = $coffeeType->getType();
     }
 
-    public function getOrder(): array
+    public function orderComplete()
     {
-        return array(
-            'name'        => $this->name,
-            'phoneNumber' => $this->phoneNumber,
-            'coffeeType'  => $this->coffeeType,
-        );
+        echo 'Your order is confirmed, we are preparing your '.$this->coffeeType.'!<br />';
+        echo 'Your '.$this->coffeeType.' is ready! Thank you for using our services! <br />';
     }
 }
 
-/*$chosenCoffee = 'Espresso';
-$name         = 'Aco';
-$phoneNumber  = '555-333';
-$coffeeType = (new CoffeeFactory)->brew($chosenCoffee);
-if (!is_null($coffeeType)){
-    $order      = new CustomerOrder($coffeeType, $name, $phoneNumber);
-    $result     = $order->getOrder();
-    echo 'Person who ordered: '.$result['name'].'<br />';
-    echo 'Provided phone number: '.$result['phoneNumber'].'<br />';
-    echo 'Your order: '.$result['coffeeType'];
-}else{
-    echo 'Invalid type of coffee, please select a valid one and try again!';
-}*/
+$chosenType    = 'Mocha';
+$orderedCoffee = (new CoffeeFactory())->brew($chosenType);
+$order         = new CustomerOrder($orderedCoffee);
+$order->orderComplete();
+echo 'Other available types of coffee we offer: ';
+$chosenCoffee = array('Latte', 'Mocha', 'Espresso', 'Macchiato', 'Ristretto');
 
-$typesArray = ['Espresso', 'Latte', 'Macchiato', 'Ristretto', 'Mocha'];
-foreach ($typesArray as $chosenCoffee) {
-    $coffeeType = (new CoffeeFactory())->brew($chosenCoffee);
-    echo $chosenCoffee.'<br />';
+foreach ($chosenCoffee as $coffeeType) {
+    $result = (new CoffeeFactory())->brew($coffeeType);
+    echo $result->getType().' ';
 }
