@@ -1,6 +1,6 @@
 <?php
 
-abstract class CoffeeType
+trait CoffeeType
 {
     public function getType(): string
     {
