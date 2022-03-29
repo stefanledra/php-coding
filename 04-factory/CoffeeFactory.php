@@ -1,5 +1,6 @@
 <?php
 
+include 'coffee-types/CoffeeType.php';
 include_once 'coffee-types/Latte.php';
 include_once 'coffee-types/Mocha.php';
 include_once 'coffee-types/Espresso.php';

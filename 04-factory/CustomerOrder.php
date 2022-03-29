@@ -1,7 +1,6 @@
 <?php
 
 include 'CoffeeFactory.php';
-include_once 'coffee-types/CoffeeType.php';
 
 class CustomerOrder
 {
@@ -19,14 +18,14 @@ class CustomerOrder
     }
 }
 
-$chosenType    = 'Mocha';
+$chosenType    = 'Ristretto';
 $orderedCoffee = (new CoffeeFactory())->brew($chosenType);
 $order         = new CustomerOrder($orderedCoffee);
 $order->orderComplete();
 echo 'Other available types of coffee we offer: ';
-$chosenCoffee = array('Latte', 'Mocha', 'Espresso', 'Macchiato', 'Ristretto');
+$availableCoffee = array('Latte', 'Mocha', 'Espresso', 'Macchiato', 'Ristretto');
 
-foreach ($chosenCoffee as $coffeeType) {
+foreach ($availableCoffee as $coffeeType) {
     $result = (new CoffeeFactory())->brew($coffeeType);
     echo $result->getType().' ';
 }

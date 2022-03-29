@@ -1,10 +1,9 @@
 <?php
 
-include_once 'CoffeeType.php';
-
-class Latte extends CoffeeType
+class Latte
 {
     protected string $name;
+    use CoffeeType;
 
     public function __construct($name)
     {
