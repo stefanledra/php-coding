@@ -1,48 +1,36 @@
 <?php
 
+include 'config.php';
 include 'Hashing-openssl.php';
-?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Hashing algorithm</title>
-    </head>
-    <body>
-    <form method="POST">
-        Enter the word you want to hash and the method:
-        <label>
-            <input type="text" name="givenWord" placeholder="Word">
-            <input type="text" name="cipher" placeholder="Method">
-        </label>
-        <input type="submit" name="hashButton" value="Hash">
-    </form>
-    <br/>
-    <form method="POST">
-        Enter the hashed string you want to unhash:
-        <label>
-            <input type="text" name="hashedWord">
-        </label>
-        <input type="submit" name="unhashButton" value="Unhash">
-    </form>
 
-    </body>
-    </html>
-<?php
-
-$newHashing = new Hashing();
-if (isset($_POST['hashButton'])) {
-    try {
-        $result = $newHashing->encrypt($_POST['givenWord'], $_POST['cipher']);
-        echo 'Encrypted word: '.$result.'<br />';
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-} elseif (isset($_POST['unhashButton'])) {
-    try {
-        echo $newHashing->decrypt($_POST['hashedWord']).'<br />';
-    } catch (Exception $e) {
-        echo $e->getMessage().' '.'<br />';
+$cipher = 'aes-256-cbc';
+try {
+    $newHashing = new Hashing($cipher);
+    $newHashing->connect($config);
+} catch (Exception) {
+    exit('Invalid cipher method!');
+}
+//$wordToHash = 'This is to be encrypted'; ->parameter must be set
+//Ask if the word to be hashed exists in the database
+if (isset ($wordToHash)) {
+    if ($newHashing->getData($wordToHash) === $wordToHash) {
+        $hash = $newHashing->encrypt($wordToHash);
+        $newHashing->inputData($hash, $wordToHash);
+        echo 'Word after hashing: '.$hash.'<br />';
+    } else {
+        echo 'Word after hashing: '.$newHashing->getData($wordToHash)['hashed_string'];
     }
 }
+
+//Ask if the hash is already in the database-> triggers only if there is a hashed word provided
+//$hash = 'X4vw98ouoq27qbicLvzXHoXZTcuRsd38VPMhTn7CAv8='; ->parameter must be set
+
+if (isset($hash)) {
+    if ($newHashing->getData($hash) === $hash) {
+        echo 'Word after unhashing: '.$newHashing->decrypt($hash);
+    } else {
+        echo 'Word after unhashing: '.($newHashing->getData($hash))['initial_word'];
+    }
+}
+
