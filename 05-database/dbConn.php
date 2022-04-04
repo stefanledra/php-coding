@@ -27,18 +27,6 @@ class dbConn
         }
     }
 
-    public function getData($passedString)
-    {
-        $stmt = self::$connection->prepare('SELECT * FROM hash_history where hashed_string = ? or initial_word = ?');
-        $stmt->execute([$passedString, $passedString]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ( ! $row) {
-            return $passedString;
-        } else {
-            return $row;
-        }
-    }
-
     public function inputData($passedString, $initialWord)
     {
         $query = 'INSERT INTO 
@@ -46,5 +34,22 @@ class dbConn
                       values(? , ?)';
         $stmt  = self::$connection->prepare($query);
         $stmt->execute([$passedString, $initialWord]);
+    }
+
+    public function doesExist($value)
+    {
+        if ($this->getData($value)) {
+            return $this->getData($value);
+        } else {
+            return false;
+        }
+    }
+
+    public function getData($passedString)
+    {
+        $stmt = self::$connection->prepare('SELECT * FROM hash_history where hashed_string = ? or initial_word = ?');
+        $stmt->execute([$passedString, $passedString]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

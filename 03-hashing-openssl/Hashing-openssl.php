@@ -19,23 +19,19 @@ class Encryption
         $this->cipherMethods = openssl_get_cipher_methods();
         if (in_array($cipher, $this->cipherMethods)) {
             $this->cipher = $cipher;
-
         } else {
             throw new Exception('Invalid encryption method!');
         }
-
     }
 
     public function encrypt($initialWord): string
     {
-
         $this->key         = bin2hex(openssl_random_pseudo_bytes($this->keyGenBits));       //Using the functions to get a randomized and valid key for encryption
         $ivlen             = openssl_cipher_iv_length($this->cipher);
         $this->iv          = openssl_random_pseudo_bytes($ivlen);
         $this->initialWord = $initialWord;
 
         return openssl_encrypt($initialWord, $this->cipher, $this->key, $this->option, $this->iv);
-
     }
 
     public function decrypt($encryptedWord): string
@@ -49,18 +45,6 @@ class Encryption
     }
 }
 
-$wordToEncrypt = 'This is to be encrypted';
-
-$cipher = 'aes-256-cbc';
-try {
-    $newEncryption = new Encryption($cipher);
-    $wordToDecrypt = $newEncryption->encrypt($wordToEncrypt);
-    echo 'Encrypted word: '.$wordToDecrypt.'<br />';
-    echo 'Result after decrypting: '.$newEncryption->decrypt($wordToDecrypt).'<br />';
-
-} catch (Exception $e) {
-    echo $e->getMessage().' '.'<br />';
-}
 
 
 
